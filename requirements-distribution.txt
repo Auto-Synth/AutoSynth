@@ -1,0 +1,12 @@
+torch==2.9.0
+torchaudio==2.9.0
+torchvision==0.24.0
+numpy==1.26.4
+hear21passt==0.0.26
+timm==0.4.12
+torchvggish @ git+https://github.com/harritaylor/torchvggish.git@f3f90969ce8fb77a05d984b892ddf662e8466377
+resampy==0.4.2
+librosa==0.10.2.post1
+soundfile==0.13.1
+PyYAML==6.0.3
+scipy==1.15.3

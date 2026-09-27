@@ -1,0 +1,115 @@
+seed: 1234
+device: cuda
+threads: 4
+audio:
+  sample_rate: 44100
+  duration: 5.0
+  mel_frames: 501
+  use_saved_mean_and_variance: false
+  mel:
+    n_mels: 128
+    window_seconds: 0.025
+    frames_per_second: 100.0
+    window: hamming
+model:
+  input_channels: 2
+  d_model: 512
+  nhead: 8
+  num_layers: 12
+  dim_feedforward: 1024
+  dropout: 0.1
+  activation: gelu
+  normalize_before: true
+  gaussian_sigma: 0.02
+data:
+  helm: data/helm
+  stable_audio_train: data/stable_audio_3/train.jsonl
+  stable_audio_val: data/stable_audio_3/val.jsonl
+  nsynth_val: data/nsynth/val.jsonl
+  schema: assets/helm_parameter_space.json
+  order: assets/helm_order.yaml
+sft:
+  updates: 3000000
+  batch_size: 16
+  workers: 8
+  lr: 0.0002
+  weight_decay: 0.0001
+  warmup_steps: 10000
+  start_factor: 0.2
+  min_lr: 0.000001
+  temperature: 0.2
+  grad_clip: 1.0
+  eval_every: 5000
+  save_every: 5000
+grpo:
+  updates: 266667
+  batch_size: 3
+  group_size: 8
+  lr: 0.000005
+  weight_decay: 0.0
+  grad_clip: 1.0
+  eval_every: 1000
+  save_every: 1000
+  bf16: true
+  mix:
+    stable_audio: 5
+    in_domain: 3
+sampling:
+  temperature: 1.0
+  epsilon: 0.7
+  top_k: 16
+  min_prob: 0.1
+reward:
+  weights:
+    clap: 8.0
+    basic_pitch: 12.0
+    audiobox_ce: 1.0
+    audiobox_cu: 1.0
+    wmfcc: 0.07
+    sot: 3.58
+    mss: 0.11
+    rms: 0.24
+  basic_pitch:
+    note_weight: 0.3333333333333333
+    onset_weight: 0.3333333333333333
+    contour_weight: 0.3333333333333333
+    inference_batch_size: 16
+    device: cpu
+  audiobox_min: 1.0
+  audiobox_max: 10.0
+renderer:
+  num_workers: 4
+  plugin_path: plugins/helm.so
+  parameter_schema_path: assets/helm_parameter_space.json
+  sample_rate: 44100
+  block_size: 512
+  state_load_flush_seconds: 0.02
+  tail_flush_seconds: 0.0
+  fadeout_seconds: 0.1
+  auto_start_xvfb: true
+  xvfb_path: Xvfb
+  timeout_seconds: 120.0
+  max_renders_per_worker: 32
+  fresh_plugin_per_render: true
+  suppress_native_output: true
+validation:
+  samples_per_set: 64
+  batch_size: 8
+  checkpoint_top_k: 3
+metrics:
+  batch_size: 8
+  clap_checkpoint: models/msclap/CLAP_weights_2023.pth
+  audiobox_checkpoint: models/audiobox/checkpoint.pt
+  languagebind_code: third_party/LanguageBind
+  languagebind_checkpoint: models/LanguageBind_Audio_FT
+  vggish_checkpoint: models/vggish/vggish-10086976.pth
+  passt_checkpoint: models/passt/passt-s-f128-p16-s10-ap.476-swa.pt
+text_generation:
+  checkpoint: models/stable-audio-3-medium
+  steps: 8
+  cfg_scale: 1.0
+  duration: 5.0
+logging:
+  every: 10
+  wandb: false
+  project: AutoSynth

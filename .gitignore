@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+outputs/
+models/*
+!models/.gitkeep
+data/*
+!data/.gitkeep
+plugins/*
+!plugins/.gitkeep
+third_party/
+wandb/

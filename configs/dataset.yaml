@@ -1,0 +1,57 @@
+paths:
+  output_root: data/helm
+  plugin_path: plugins/helm.so
+  preset_root: plugins/patches
+  parameter_schema_path: assets/helm_parameter_space.json
+  catalog_cache_path: data/helm/cache/preset_catalog.json
+dataset:
+  num_samples: 2050000
+  sample_rate: 44100
+  block_size: 512
+  target_duration: 5.0
+  min_rms: 1.0e-06
+  max_abs_peak: 8.0
+  max_tries: 30
+  seed: 1234
+  split:
+    train: 0.975609756097561
+    val: 0.01951219512195122
+mel:
+  n_mels: 128
+  window_seconds: 0.025
+  frames_per_second: 100.0
+  window: hamming
+render:
+  state_load_flush_seconds: 0.02
+  tail_flush_seconds: 0.0
+  fadeout_seconds: 0.05
+  auto_start_xvfb: true
+  xvfb_path: Xvfb
+  render_timeout_seconds: 120.0
+  max_renders_per_worker: 32
+  fresh_plugin_per_render: true
+augmentation:
+  preset_probability: 0.9
+  category_uniform_probability: 0.3
+  edit_geometric_p: 0.06
+  max_parameter_edits: 64
+  route_edit_probability: 0.9
+  wild_parameter_strength_multiplier: 2.0
+  coverage_probability: 0.2
+  route_zero_threshold: 0.02
+midi:
+  note_min: 24
+  note_max: 96
+  velocity_min: 1
+  velocity_max: 127
+  duration_min: 0.2
+  duration_max: 3.0
+  controller_excitation_probability: 0.15
+  short_melodies: false
+runtime:
+  log_interval: 100
+sharding:
+  train: 200
+  val: 4
+  test: 1
+

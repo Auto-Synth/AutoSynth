@@ -1,0 +1,7 @@
+The Transformer layers in autosynth/layers.py are adapted from DETR through SynthRL.
+DETR: Copyright (c) Facebook, Inc. and its affiliates. Apache License 2.0.
+https://github.com/facebookresearch/detr
+The Apache License 2.0 text is included in LICENSE.
+
+Pretrained model weights, third-party model runtimes, Helm binaries, presets,
+and datasets are not included. Their licenses apply independently.

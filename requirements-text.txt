@@ -1,0 +1,2 @@
+stable-audio-3 @ git+https://github.com/Stability-AI/stable-audio-3.git@779434a908193105335fd8d833418603625b2859
+PyYAML==6.0.3
